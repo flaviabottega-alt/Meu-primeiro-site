@@ -1,11 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>🌈 Galeria Infantil · 50 Atividades</title>
+    <style>
+        /* ===== RESET SUAVE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f9f0c1 0%, #fce2b6 100%);
+            font-family: 'Segoe UI', 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        /* cabeçalho divertido */
+        .cabecalho {
+            max-width: 1200px;
+            margin: 0 auto 2rem auto;
+            text-align: center;
+        }
+
+        .cabecalho h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2d4059;
+            text-shadow: 4px 4px 0 #fbd46d, 6px 6px 0 rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+            word-break: break-word;
+        }
+
+        .cabecalho h1 span {
+            display: inline-block;
+            transform: rotate(-2deg);
+            background: #f08a5d;
+            color: white;
+            font-size: 2rem;
+            padding: 0.2rem 1.2rem;
+            border-radius: 60px 60px 30px 30px;
+            margin: 0 0.3rem;
+            box-shadow: 0 8px 0 #b83b5e;
+        }
+
+        .subtitulo {
+            font-size: 1.5rem;
+            color: #3f2e3e;
+            background: rgba(255,255,240,0.7);
+            display: inline-block;
+            padding: 0.6rem 2rem;
+            border-radius: 3rem;
+            margin-top: 0.8rem;
+            backdrop-filter: blur(3px);
+            border: 3px dotted #ea97c0;
+        }
+
+        /* grade principal — 50 espaços */
+        .galeria {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.2rem;
+            padding: 1rem;
+            background: #fceed1;
+            border-radius: 60px 60px 30px 30px;
+            box-shadow: 0 20px 30px -10px rgba(172, 112, 38, 0.5), inset 0 0 0 8px #fef9e6;
+            border: 6px solid #ffb347;
+        }
+
+        /* cada card da atividade */
+        .card {
+            background-color: #fef9e0;
+            border-radius: 40px 40px 25px 25px;
+            padding: 1rem 0.5rem 0.8rem 0.5rem;
+            box-shadow: 0 10px 0 #e7a977, 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.15s ease, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid #ffffff;
+            cursor: default;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 0 #d48c54, 0 12px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        /* a moldura da imagem */
+        .moldura {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* quadradinho perfeito */
+            background: #b0e0e6;  /* cor provisória (caso link falhe) */
+            border-radius: 35px 35px 20px 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid white;
+            box-shadow: inset 0 0 0 3px #f4a261;
+        }
+
+        /* estilo das imagens */
+        .moldura img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;      /* preenche sem distorcer, corta se necessário */
+            background-color: #ffe28c; /* tom quente de fundo para imagens transparentes */
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .card:hover img {
+            transform: scale(1.06);
+        }
+
+        /* texto da brincadeira / número */
+        .legenda {
+            margin-top: 0.6rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3f2e3e;
+            background: #fef3ae;
+            width: 90%;
+            text-align: center;
+            padding: 0.3rem 0;
+            border-radius: 30px;
+            border: 3px solid #f9b572;
+            box-shadow: 0 3px 0 #b26b3c;
+            transition: 0.1s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card:hover .legenda {
+            background: #ffe49c;
+            border-color: #fa9e4a;
+        }
+
+        /* número do cantinho (opcional) */
+        .card::before {
+            counter-increment: atividade;
+            content: "✨" counter(atividade);
+            font-size: 0.7rem;
+            font-weight: bold;
+            background: #f85c70;
+            color: white;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            margin-bottom: 0.3rem;
+            align-self: flex-start;
+            margin-left: 0.4rem;
+            border: 2px solid #fff7b1;
+            box-shadow: 0 3px 0 #972b3c;
+        }
+
+        .galeria {
+            counter-reset: atividade;
+        }
+
+        /* se alguma imagem quebrar, mostrar algo simpático */
+        .moldura img[alt] {
+            position: relative;
+        }
+        .moldura img:not([src]), 
+        .moldura img[src=""], 
+        .moldura img[src="#"] {
+            min-width: 100%;
+            min-height: 100%;
+            background: #f7d6b3;
+            background-image: radial-gradient(circle at 20px 20px, #ffb882 3px, transparent 3px), 
+                              linear-gradient(45deg, #f9c49a 20%, #ffdbb5 80%);
+            object-fit: cover; 
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><rect width="100" height="100" fill="%23fad2b0"/><circle cx="30" cy="35" r="12" fill="%23fcf4d9"/><circle cx="70" cy="35" r="12" fill="%23fcf4d9"/><ellipse cx="50" cy="70" rx="30" ry="18" fill="%23fcd8b5"/><circle cx="25" cy="32" r="3" fill="%23573e2d"/><circle cx="65" cy="32" r="3" fill="%23573e2d"/></svg>'); /* carinha simpática */
+        }
+
+        /* rodapé fofo */
+        .rodape {
+            max-width: 1200px;
+            margin: 3rem auto 1rem auto;
+            text-align: center;
+            font-size: 1.4rem;
+            color: #5e3a2c;
+            background: #faeac9;
+            padding: 0.8rem 2rem;
+            border-radius: 80px;
+            border: 5px dashed #ffa05e;
+        }
+
+        .rodape a {
+            text-decoration: none;
+            background: #f08a5d;
+            color: white;
+            padding: 0.2rem 1.5rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            margin: 0 0.2rem;
+            border: 3px solid #b83b5e;
+        }
+
+        /* responsividade delicada */
+        @media (max-width: 700px) {
+            .cabecalho h1 {
+                font-size: 2rem;
+            }
+            .cabecalho h1 span {
+                font-size: 1.5rem;
+            }
+            .subtitulo {
+                font-size: 1.2rem;
+            }
+            .galeria {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 0.8rem;
+            }
+            .legenda {
+                font-size: 0.8rem;
+                white-space: normal;
+            }
+        }
+        @media (max-width: 450px) {
+            .galeria {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-    dfghjkl
+
+<header class="cabecalho">
+    <h1>
+        🎨 <span>50</span> ATIVIDADES<br> CRIATIVAS 🧸
+    </h1>
+    <div class="subtitulo">
+        ⭐ clique nas imagens para trocar ideias ⭐
+    </div>
+</header>
+
+<!-- GALERIA COM 50 ESPAÇOS (links de exemplo de atividades infantis) -->
+<main class="galeria" id="galeria">
+
+    <!-- cada .card é um espaço com <img src="link"> -->
+    <!-- 1 a 10: atividades artísticas e lúdicas -->
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1584697264402-0ab4f5f8bfb0?w=150&h=150&fit=crop&auto=format" alt="pintura com mãos"></div><div class="legenda">🎨 Pintura a dedo</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1596460107916-430662b267f1?w=150&h=150&fit=crop&auto=format" alt="massinha colorida"></div><div class="legenda">🟢 Massinha caseira</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1545425265-2a00e1b8d125?w=150&h=150&fit=crop&auto=format" alt="criança lendo"></div><div class="legenda">📖 Hora da leitura</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1513360371669-4adf3dd7dff8?w=150&h=150&fit=crop&auto=format" alt="fantoches de meia"></div><div class="legenda">🧦 Fantoches</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1595225476474-87563907c212?w=150&h=150&fit=crop&auto=format" alt="blocos de montar"></div><div class="legenda">🧱 Blocos gigantes</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1560421683-6856ea585c78?w=150&h=150&fit=crop&auto=format" alt="tear infantil"></div><div class="legenda">🧵 Tecelagem</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=150&h=150&fit=crop&auto=format" alt="criança plantando"></div><div class="legenda">🌱 Plantar feijão</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=150&h=150&fit=crop&auto=format" alt="criança dançando"></div><div class="legenda">💃 Dança das cadeiras</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1545324418-cc1e3a0a8c5b?w=150&h=150&fit=crop&auto=format" alt="quebra-cabeça"></div><div class="legenda">🧩 Quebra-cabeça</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1594321850887-5af26cd98e10?w=150&h=150&fit=crop&auto=format" alt="brincar com água"></div><div class="legenda">💦 Balde d’água</div></div>
+
+    <!-- 11 a 20: jogos e movimento -->
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1502082552248-6b3b5b50cfb7?w=150&h=150&fit=crop&auto=format" alt="amarelinha"></div><div class="legenda">🎯 Amarelinha</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1576610616654-0d7a7385da7c?w=150&h=150&fit=crop&auto=format" alt="bolinha de sabão"></div><div class="legenda">🫧 Bolhas de sabão</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1599507593276-3e1a7f6d3081?w=150&h=150&fit=crop&auto=format" alt="criança andando de bicicleta"></div><div class="legenda">🚲 Passeio de bike</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1607453997082-6bfbc236b4b4?w=150&h=150&fit=crop&auto=format" alt="circo infantil"></div><div class="legenda">🤹 Malabarismo</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1533561797500-4fad4750814e?w=150&h=150&fit=crop&auto=format" alt="esconde-esconde"></div><div class="legenda">🙈 Esconde-esconde</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=150&h=150&fit=crop&auto=format" alt="criança cantando"></div><div class="legenda">🎤 Karaokê infantil</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1525257838139-367a9e5d836e?w=150&h=150&fit=crop&auto=format" alt="criança e massinha"></div><div class="legenda">🐚 Areia cinética</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=150&h=150&fit=crop&auto=format" alt="criança com instrumento"></div><div class="legenda">🥁 Bateria de latas</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1527450890460-826918a38c7a?w=150&h=150&fit=crop&auto=format" alt="piquenique"></div><div class="legenda">🧺 Piquenique no chão</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=150&h=150&fit=crop&auto=format" alt="acampamento dentro de casa"></div><div class="legenda">⛺ Cabana de lençol</div></div>
+
+    <!-- 21 a 30: artes manuais e ciência -->
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1560421683-6856ea585c78?w=150&h=150&fit=crop&auto=format" alt="colagem infantil"></div><div class="legenda">✂️ Colagem colorida</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=150&h=150&fit=crop&auto=format" alt="cientista mirim"></div><div class="legenda">🔬 Vulcão de bicarbonato</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1587653915936-5623ea0b949a?w=150&h=150&fit=crop&auto=format" alt="criança pintando rosto"></div><div class="legenda">🎭 Pintura facial</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1502082552248-6b3b5b50cfb7?w=150&h=150&fit=crop&auto=format" alt="criança desenhando"></div><div class="legenda">🖍️ Desenho com giz</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1596464716127-f2a82984de7e?w=150&h=150&fit=crop&auto=format" alt="carrinho de rolimã"></div><div class="legenda">🏎️ Carrinho de madeira</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1566140967404-b8b3932483f5?w=150&h=150&fit=crop&auto=format" alt="criança e cesta de ovos"></div><div class="legenda">🥚 Caça aos ovos</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?w=150&h=150&fit=crop&auto=format" alt="criança subindo em árvore"></div><div class="legenda">🌳 Subir em árvore</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=150&h=150&fit=crop&auto=format" alt="criança observando nuvens"></div><div class="legenda">☁️ Ver formas nas nuvens</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1519832979-6fa011b87667?w=150&h=150&fit=crop&auto=format" alt="criança fazendo yoga"></div><div class="legenda">🧘 Yoga para crianças</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1578489758854-f134a633f201?w=150&h=150&fit=crop&auto=format" alt="criança com fantasia"></div><div class="legenda">🦸 Dia de fantasia</div></div>
+
+    <!-- 31 a 40: culinária e faz de conta -->
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1594604476526-5fc974abf2fd?w=150&h=150&fit=crop&auto=format" alt="criança decorando biscoitos"></div><div class="legenda">🍪 Decorar biscoitos</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1594691622415-0545e0a040ff?w=150&h=150&fit=crop&auto=format" alt="criança fazendo pizza"></div><div class="legenda">🍕 Mini pizza</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1584999734482-0361aecad844?w=150&h=150&fit=crop&auto=format" alt="criança fazendo suco"></div><div class="legenda">🥤 Suco natural</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=150&h=150&fit=crop&auto=format" alt="criança brincando de mercado"></div><div class="legenda">🧑‍🌾 Feirinha em casa</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=150&h=150&fit=crop&auto=format" alt="criança com fantoche de sombra"></div><div class="legenda">👥 Teatro de sombras</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1541014741259-de529411b96a?w=150&h=150&fit=crop&auto=format" alt="criança fazendo slime"></div><div class="legenda">🧪 Slime caseiro</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1588964895597-cfccd6e2dbf9?w=150&h=150&fit=crop&auto=format" alt="criança brincando de médico"></div><div class="legenda">🩺 Brincar de médico</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1579202673506-ca3ce28943ef?w=150&h=150&fit=crop&auto=format" alt="criança e binóculos"></div><div class="legenda">🐦 Observar passarinho</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1597692496273-23ec936d36d7?w=150&h=150&fit=crop&auto=format" alt="criança com barro"></div><div class="legenda">🏺 Cerâmica molinha</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1572346916145-5ad4fb8cd3bb?w=150&h=150&fit=crop&auto=format" alt="criança fazendo origami"></div><div class="legenda">🦢 Origami simples</div></div>
+
+    <!-- 41 a 50: completando 50 ideias -->
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=150&h=150&fit=crop&auto=format" alt="criança com calendário"></div><div class="legenda">📅 Histórias inventadas</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=150&h=150&fit=crop&auto=format" alt="criança com almofadas"></div><div class="legenda">🏰 Forte de almofadas</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1572346916145-5ad4fb8cd3bb?w=150&h=150&fit=crop&auto=format" alt="criança com bola"></div><div class="legenda">⚽ Bola ao cesto</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1595967783875-c371f35d8049?w=150&h=150&fit=crop&auto=format" alt="criança com corda"></div><div class="legenda">🪢 Pular corda</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1545235617-7f6245d78c17?w=150&h=150&fit=crop&auto=format" alt="criança com carimbo"></div><div class="legenda">🖨️ Carimbo com batata</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop&auto=format" alt="criança fazendo colar"></div><div class="legenda">📿 Colar de macarrão</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1565552645632-d725f8bfc19a?w=150&h=150&fit=crop&auto=format" alt="caça ao tesouro"></div><div class="legenda">🗺️ Caça ao tesouro</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1602526430780-782d6b1783fa?w=150&h=150&fit=crop&auto=format" alt="criança empinando pipa"></div><div class="legenda">🪁 Soltar pipa</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=150&h=150&fit=crop&auto=format" alt="roda de música"></div><div class="legenda">🎶 Roda cantada</div></div>
+    <div class="card"><div class="moldura"><img src="https://images.unsplash.com/photo-1551893478-d726eaf0442c?w=150&h=150&fit=crop&auto=format" alt="brincar com ímãs"></div><div class="legenda">🧲 Ímãs geladeira</div></div>
+</main>
+
+<footer class="rodape">
+    🧒🏻✨ 50 espaços para registrar atividades — <a href="#" onclick="alert('Bora brincar! 🎈')">troque os links</a> ✨🧒🏽
+</footer>
+
+<!-- pequeno truque para imagens quebradas exibirem o fallback bonitinho (já tratado no CSS) -->
 </body>
 </html>
